@@ -9,7 +9,7 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/pp_1.1";
     private static final String UN = "root";
     private static final String PW = "root";
-    private static final String DDRIVER = "com.mysql.jdbc.Driver";
+    private static final String DDRIVER = "com.mysql.cj.jdbc.Driver";
     private static final Connection connection = Conn();
 
     private static Connection Conn() {

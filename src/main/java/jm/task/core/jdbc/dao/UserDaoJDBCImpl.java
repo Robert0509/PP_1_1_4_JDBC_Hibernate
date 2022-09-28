@@ -17,7 +17,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String query = "CREATE TABLE IF NOT EXISTS user (id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT, name TINYTEXT NOT NULL, lastName TINYTEXT NOT NULL, age TINYINT )";
+        String query = "CREATE TABLE IF NOT EXISTS users (id BIGINT NOT NULL AUTO_INCREMENT, name TINYTEXT NOT NULL, lastName TINYTEXT NOT NULL, age TINYINT, PRIMARY KEY(id))";
        try( Connection con = Util.getConnection();Statement statement = con.createStatement()){
            statement.executeUpdate(query);
        }
@@ -30,42 +30,45 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String query= "DROP TABLE IF EXISTS  user";
+        String query= "DROP TABLE IF EXISTS  users";
         try(Connection con = Util.getConnection(); Statement statement = con.createStatement()){
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            System.err.println("Ошибка при удалении таблицы");
+            System.out.println("Ошибка при удалении таблицы");
             e.getErrorCode();
         }
 
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String query = "INSERT INTO user (name, lastName, age) VALUES (?, ?, ?)";
+        String query = "INSERT INTO users ( name, lastName, age) VALUES (?, ?, ?)";
         try (Connection con = Util.getConnection(); PreparedStatement ps = con.prepareStatement(query)){
             ps.setString(1,name);
             ps.setString(2,lastName);
             ps.setByte(3,age);
-            ps.execute();
+
+            System.out.println("");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при добавлении пользователя");
+            e.getErrorCode();
         }
 
     }
 
     public void removeUserById(long id) {
-        String query = "DELETE FROM user WHERE id = ?";
+        String query = "DELETE FROM users WHERE id = ?";
         try (Connection con = Util.getConnection(); PreparedStatement ps = con.prepareStatement(query)){
             ps.setLong(1, id);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при удалении пользователя");
+            e.getErrorCode();
         }
 
     }
 
     public List<User> getAllUsers() {
-        String query ="SELECT * FROM user";
+        String query ="SELECT * FROM users";
         List<User> list = new ArrayList<>();
         try( Connection con = Util.getConnection();Statement statement = con.createStatement()){
             ResultSet resultSet = statement.executeQuery(query);
@@ -79,18 +82,20 @@ public class UserDaoJDBCImpl implements UserDao {
                 list.add(user);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при возвращении всех пользователей");
+            e.getErrorCode();;
         }
 
         return list;
     }
 
     public void cleanUsersTable() {
-        String query = "TURNCATE TABLE user";
+        String query = "TURNCATE TABLE users";
         try( Connection con = Util.getConnection();Statement statement = con.createStatement()){
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при очистки таблицы");
+            e.getErrorCode();
         }
 
     }
