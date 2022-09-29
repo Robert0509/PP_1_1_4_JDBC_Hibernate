@@ -15,7 +15,7 @@ public class Main {
 
         UserServiceImpl userService = new UserServiceImpl();
 
-       userService.createUsersTable();
+        userService.createUsersTable();
 
         userService.saveUser(userIvan.getName(), userIvan.getLastName(), userIvan.getAge());
         userService.saveUser(userPetr.getName(), userPetr.getLastName(), userPetr.getAge());
