@@ -22,14 +22,14 @@ public class Main {
         userService.saveUser(userBoris.getName(), userBoris.getLastName(), userBoris.getAge());
         userService.saveUser(userJhon.getName(), userJhon.getLastName(), userJhon.getAge());
 
-//        List<User> userList = userService.getAllUsers();
-//
-//        for (User us : userList) {
-//            System.out.println(us.toString());
-//        }
-//
-//        userService.cleanUsersTable();
-//        userService.dropUsersTable();
+        List<User> userList = userService.getAllUsers();
+
+        for (User us : userList) {
+            System.out.println(us.toString());
+        }
+
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
 
     }
 }
